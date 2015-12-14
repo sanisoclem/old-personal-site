@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha",
+    "test": "grunt test",
     "postinstall" :"bower install && grunt build"
   },
   "dependencies": {
