@@ -1,0 +1,8 @@
+{
+  "name": "Personal Site",
+  "description": "My personal web site",
+  "repository": "https://github.com/sanisoclem/personal-site",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static","jerahmeel","cosinas"],
+  "image": "heroku/nodejs"
+}
