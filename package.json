@@ -21,6 +21,7 @@
     "hbs": "^4.0.0",
     "less-plugin-autoprefix": "^1.5.1",
     "less-plugin-clean-css": "^1.5.1",
+    "mongodb": "^2.0.52",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
   },
