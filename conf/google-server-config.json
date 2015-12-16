@@ -1,7 +1,0 @@
-{
-  "clientId": "186108015106-76ipo7mpuhctop494tar3otcd76rrpmm.apps.googleusercontent.com",
-  "serviceAccountEmail": "service-account@jerahmeelcosinas-net.iam.gserviceaccount.com",
-  "serviceAccountPrivateKeyFile": "google-server-key.key.pem",
-  "widgetUrl": "http://dev.jerahmeelcosinas.net/login",
-  "cookieName": "gtoken"
-}
