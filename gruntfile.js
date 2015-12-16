@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
         watch: {
-            files: ["**/*", "!**/node_modules/**", "!**public/bower_components/**"],
+            files: ["**/*", "!**/node_modules/**", "!**bower_components/**"],
             tasks: ["watch-tasks"],
         },
         jshint: {
