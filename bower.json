@@ -18,5 +18,12 @@
   ],
   "dependencies": {
     "angular": "angularjs#~1.4.8"
+  },
+  "exportsOverride": {
+    "bootstrap": {
+      "js": "dist/js/*.js",
+      "fonts": "dist/fonts/*",
+      "css": "dist/css/*"
+    }
   }
 }

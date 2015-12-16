@@ -3,9 +3,47 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
+        bower: {
+            install: {
+                options: {
+                    targetDir: './lib',
+                    layout: 'byComponent',
+                    install: false,
+                    verbose: false,
+                    cleanTargetDir: true,
+                    cleanBowerDir: false,
+                    bowerOptions: {}
+                }
+            }
+        },
         watch: {
-            files: ["**/*", "!**/node_modules/**", "!**bower_components/**"],
+            files: ["**/*", "!**/node_modules/**","!**lib/**", "!**bower_components/**"],
             tasks: ["watch-tasks"],
+        },
+        less: {
+            development: {
+                options: {
+                    //paths: ["less/imports"]
+                },
+                files: {
+                    "public/css/app.css": "resources/less/app.less"
+                }
+            },
+            production: {
+                options: {
+                    //paths: ["less/imports"],
+                    plugins: [
+                        new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]}),
+                        new (require('less-plugin-clean-css'))({advanced:true})
+                    ],
+                    modifyVars: {
+                        //imgPath: '"http://mycdn.com/path/to/images"'
+                    }
+                },
+                files: {
+                    "public/css/app.css": "resources/less/app.less"
+                }
+            }
         },
         jshint: {
             files: [
@@ -16,8 +54,7 @@ module.exports = function(grunt) {
                 ignores: [
                     "node_modules/**",
                     "bower_components/**",
-                    "public/css/**",
-                    "public/js/lib/**",
+                    "lib/**",
                     "*"
                 ],
                 jshintrc: true
@@ -67,15 +104,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-jasmine-node");
     grunt.loadNpmTasks("grunt-karma");
     grunt.loadNpmTasks("grunt-protractor-runner");
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-bower-task');
 
     grunt.registerTask("test", ["jshint", "jasmine_node"]);//, "karma:singleRun", "protractor"]);
     grunt.registerTask("ci", ["jshint", "jasmine_node", "karma:continuous", "protractor:continuous"]);
 
-    // running `grunt w` will startup karma and run the watch tasks
-    grunt.registerTask("w", ["karma:unit:start", "watch"]);
-    grunt.registerTask("watch-tasks", ["jshint", "jasmine_node", "karma:unit:run", "protractor"]);
+    grunt.registerTask("watch-tasks", ["less:development", "jshint", "jasmine_node"]);
 
-    grunt.registerTask("build",'builds client side resources', function() {
-        console.log('build success');
-    })
+    grunt.registerTask("build", ['bower:install','less:production'])
 };
