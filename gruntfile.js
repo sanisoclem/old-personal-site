@@ -21,14 +21,6 @@ module.exports = function(grunt) {
             tasks: ["watch-tasks"],
         },
         less: {
-            development: {
-                options: {
-                    //paths: ["less/imports"]
-                },
-                files: {
-                    "public/css/app.css": "resources/less/app.less"
-                }
-            },
             production: {
                 options: {
                     //paths: ["less/imports"],
@@ -110,7 +102,7 @@ module.exports = function(grunt) {
     grunt.registerTask("test", ["jshint", "jasmine_node"]);//, "karma:singleRun", "protractor"]);
     grunt.registerTask("ci", ["jshint", "jasmine_node", "karma:continuous", "protractor:continuous"]);
 
-    grunt.registerTask("watch-tasks", ["less:development", "jshint", "jasmine_node"]);
+    grunt.registerTask("watch-tasks", ["less:production", "jshint", "jasmine_node"]);
 
     grunt.registerTask("build", ['bower:install','less:production'])
 };
