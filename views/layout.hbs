@@ -2,18 +2,20 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/static-lib/bootstrap/css/bootstrap.min.css' />
+  <link rel='stylesheet' href='/static/css/app.css' />
   </head>
   <body>
-    <div class="content">
+    <div class="container header">
+        <h1>{{title}}</h1>
+    </div>
+    <div class="container content">
         {{{body}}}
     </div>
-
-    <div class="footer">
+    <div class="container footer">
         <hr/>
-        <img class="travis-badge" src="https://travis-ci.org/sanisoclem/personal-site.svg?branch=master"/>
         <em>version: {{version}}</em>
+        <img class="travis-badge" src="https://travis-ci.org/sanisoclem/personal-site.svg?branch=master"/>
     </div>
-
   </body>
 </html>
