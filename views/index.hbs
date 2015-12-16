@@ -1,2 +1,18 @@
+<script type="text/javascript" src="//www.gstatic.com/authtoolkit/js/gitkit.js"></script>
+<link type=text/css rel=stylesheet href="//www.gstatic.com/authtoolkit/css/gitkit.css" />
+
+<script type=text/javascript>
+    window.google.identitytoolkit.signInButton(
+            '#navbar',
+            {
+                widgetUrl: "/login",
+                signOutUrl: "/logout"
+            }
+    );
+</script>
+<div id="navbar"></div>
+<p>{{authMessage}}</p>
+<p>&nbsp;</p>
 <div><img class="travis-badge" src="https://travis-ci.org/sanisoclem/personal-site.svg?branch=master"/></div>
 <em>version: {{version}}</em>
+

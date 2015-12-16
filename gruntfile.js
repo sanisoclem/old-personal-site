@@ -99,10 +99,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-bower-task');
 
+    grunt.registerTask('create-saccount-key',function() {
+        grunt.file.write('google-server-key.pem',process.env.googleServiceAccountKey)
+    })
+
     grunt.registerTask("test", ["jshint", "jasmine_node"]);//, "karma:singleRun", "protractor"]);
     grunt.registerTask("ci", ["jshint", "jasmine_node", "karma:continuous", "protractor:continuous"]);
 
     grunt.registerTask("watch-tasks", ["less:production", "jshint", "jasmine_node"]);
 
-    grunt.registerTask("build", ['bower:install','less:production'])
+    grunt.registerTask("build", ['bower:install','less:production','create-saccount-key'])
 };
