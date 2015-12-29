@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -8,11 +9,12 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var auth = require('./routes/auth.js');
 var pkgJson = require('./package.json');
+var RedisStore = require('connect-redis')(session);
 
-
+// -- create express application
 var app = express();
 
-
+// -- expose app global vars
 app.locals.pkgJson= pkgJson;
 
 
@@ -20,14 +22,26 @@ app.locals.pkgJson= pkgJson;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
+
+// -- static resources
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/static-lib',express.static(path.join(__dirname, 'lib')));
+
+// -- setup middleware
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/static', express.static(path.join(__dirname, 'public')));
-app.use('/static-lib',express.static(path.join(__dirname, 'lib')));
+
+
+// -- setup session
+app.use(session({
+  store: new RedisStore({url:process.env.REDISCLOUD_URL}),
+  secret: process.env.sessionSecret,
+  resave: false,
+  saveUninitialized: false
+}));
 
 // -- register routes
 app.use(routes);
