@@ -1,40 +1,24 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
-var app = require('../app');
-var debug = require('debug')('personal-site:server');
-var http = require('http');
+/// <reference path="../typings/tsd.d.ts" />
+import app = require('./app');
+import http = require('http');
 var pkgJson = require('../package.json');
 
 
-/**
- * Get port from environment and store in Express.
- */
-
+// -- determine listening port and save it
 var port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-
+// -- create the http server
 var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-
+// -- start listening on port
 server.listen(port);
+
+// -- hook server event handlers
 server.on('error', onError);
 server.on('listening', onListening);
 
-/**
- * Normalize a port into a number, string, or false.
- */
-
+// -- normalizes the port
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
@@ -51,10 +35,7 @@ function normalizePort(val) {
   return false;
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
-
+// -- error handler
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
@@ -79,10 +60,7 @@ function onError(error) {
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
+// -- listened handler
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
