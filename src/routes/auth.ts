@@ -20,10 +20,10 @@ router.post('/login', function(req, res, next) {
 
 router.get('/authenticated', function(req, res, next) {
     authService.tryParseUserInfo(req,url.resolve(process.env.siteUrl,'authenticated'))
-        .then((user)=> res.render('authenticated',{response:user.displayName}))
+        .then((user)=> res.redirect('/'))
         .fail((err)=> res.redirect('/authfail'));
 });
 
 router.get('/authfail', function(req, res, next) {
-    res.render('authfail', { });
+    res.render('authfail');
 });

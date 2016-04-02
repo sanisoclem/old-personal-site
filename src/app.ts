@@ -4,11 +4,16 @@ import requestLogger = require('morgan');
 import cookieParser = require('cookie-parser');
 import bodyParser = require('body-parser');
 import session = require('express-session');
-var RedisStore = require('connect-redis')(session);
 
-import routes = require('./routes/index');
-import auth = require('./routes/auth');
+var RedisStore = require('connect-redis')(session);
 var pkgJson = require('../package.json');
+
+import routeIndex = require('./routes/index');
+import routeAuth = require('./routes/auth');
+
+import mdlAppInfo = require('./middleware/appinfo');
+import mdlUserInfo = require('./middleware/userinfo');
+
 
 
 // -- create express application
@@ -33,7 +38,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
 // -- setup session
 app.use(session({
   store: new RedisStore({url:process.env.REDISCLOUD_URL}),
@@ -41,10 +45,13 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+app.use(mdlAppInfo);
+app.use(mdlUserInfo);
+// -- ///////////////////////////
 
 // -- register routes
-app.use(routes);
-app.use(auth);
+app.use(routeIndex);
+app.use(routeAuth);
 
 // catch everything else turn into 404 errors
 app.use(function(req, res, next) {

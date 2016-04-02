@@ -63,10 +63,14 @@ class GoogleAuthService implements IAuthenticationService {
                     }
                     else {
                         let user:UserInfo = {
-                            uid: 'temp',
-                            displayName:JSON.stringify(response)
+                            uid: response.id,
+                            displayName:response.displayName
                         };
+                        if (response.emails && response.emails.length) 
+                            user.email = response.emails[0].value;
+                            
                         req.session['user'] = user;
+                        req.session['$authenticated'] = true;
                         resolve(user);
                     }
                }); 
