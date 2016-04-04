@@ -3,10 +3,24 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
+        clean: ["build", "static/lib","static/assets","typings","bower_components"],
+         watch: {
+            files: ['src/**/*.ts','assets/**/*.less'],
+            tasks: ['w']
+        },
+        tsd: {
+            refresh: {
+                options: {
+                    command: 'reinstall',
+                    latest: true,
+                    config: 'tsd.json'
+                }
+            }
+        },
         bower: {
             install: {
                 options: {
-                    targetDir: './lib',
+                    targetDir: './static/lib',
                     layout: 'byComponent',
                     install: false,
                     verbose: false,
@@ -16,9 +30,15 @@ module.exports = function(grunt) {
                 }
             }
         },
-        watch: {
-            files: ["**/*", "!**/node_modules/**","!**lib/**", "!**bower_components/**"],
-            tasks: ["watch-tasks"],
+        ts: {
+            default: {
+                files: [{ src: ['src/**/*.ts'], dest: 'build' }],
+                options: {
+                    fast: 'never',
+                    module: 'commonjs',
+                    target: 'es5'
+                }
+            }
         },
         less: {
             production: {
@@ -33,76 +53,23 @@ module.exports = function(grunt) {
                     }
                 },
                 files: {
-                    "public/css/app.css": "resources/less/app.less"
-                }
-            }
-        },
-        jshint: {
-            files: [
-                "**/*.js",
-                "**/*.js"
-            ],
-            options: {
-                ignores: [
-                    "node_modules/**",
-                    "bower_components/**",
-                    "lib/**",
-                    "*"
-                ],
-                jshintrc: true
-            }
-        },
-        jasmine_node: {
-            options: {
-                forceExit: true,
-                matchall: true,
-                showColors: true,
-                includeStackTrace: true
-            },
-            all: ["test/server"]
-        },
-        karma: {
-            unit: {
-                configFile: "test/client/karma.conf.js",
-                background: true
-            },
-            singleRun: {
-                configFile: "test/client/karma.conf.js",
-                singleRun: true
-            },
-            continuous: {
-                configFile: "test/client/karma.conf.js",
-                singleRun: true,
-                reporters: "dots",
-                browsers: ["Chrome"]
-            }
-        },
-        protractor: {
-            options: {
-                configFile: "test/client/protractor-conf.js",
-                keepAlive: true
-            },
-            continuous: {
-                options: {
-                    configFile: "test/client/protractor-conf.js",
-                    keepAlive: false
+                    "static/assets/css/app.css": "assets/less/app.less"
                 }
             }
         }
     });
 
-    grunt.loadNpmTasks("grunt-contrib-watch");
-    grunt.loadNpmTasks("grunt-contrib-jshint");
-    grunt.loadNpmTasks("grunt-jasmine-node");
-    grunt.loadNpmTasks("grunt-karma");
-    grunt.loadNpmTasks("grunt-protractor-runner");
+    grunt.loadNpmTasks('grunt-ts');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-tsd');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    
 
-    grunt.registerTask("test", ["jshint", "jasmine_node"]);//, "karma:singleRun", "protractor"]);
-    grunt.registerTask("ci", ["jshint", "jasmine_node", "karma:continuous", "protractor:continuous"]);
+    grunt.registerTask("test", ['tsd']);
 
-    grunt.registerTask("watch-tasks", ["less:production", "jshint", "jasmine_node"]);
-
-    grunt.registerTask("build", ['bower:install','less:production'])
+    grunt.registerTask("build", ['tsd','ts','bower:install','less:production']);
+    
+    grunt.registerTask("w", ['less:production']);
 };

@@ -1,5 +1,10 @@
-node_modules
 .idea
-bower_components
-lib
+.vscode
 .env
+node_modules
+bower_components
+typings
+static/assets
+static/lib
+.baseDir.ts
+build
