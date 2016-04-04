@@ -67,7 +67,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     
 
-    grunt.registerTask("test", ['tsd']);
+    grunt.registerTask("test", ['bower:install']);
 
     grunt.registerTask("build", ['tsd','ts','bower:install','less:production']);
     
