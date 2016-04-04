@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
         clean: ["build", "static/lib","static/assets","typings","bower_components"],
          watch: {
-            files: ['src/**/*.ts'],
+            files: ['src/**/*.ts','assets/**/*.less'],
             tasks: ['w']
         },
         tsd: {
@@ -67,9 +67,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     
 
-    //grunt.registerTask("test", ["jshint", "jasmine_node"]);
+    grunt.registerTask("test", ['tsd']);
 
     grunt.registerTask("build", ['tsd','ts','bower:install','less:production']);
     
-    grunt.registerTask("w", ['ts']);
+    grunt.registerTask("w", ['less:production']);
 };

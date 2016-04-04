@@ -27,6 +27,7 @@ app.locals.pkgJson = pkgJson;
 // view engine setup
 app.set('views', path.join(__dirname, '../views')); // -- set view path
 app.set('view engine', 'hbs'); // -- use handlebars
+app.set('view options',{layout: 'layouts/default'});
 
 
 // -- static resources

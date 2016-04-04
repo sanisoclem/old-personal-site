@@ -25,5 +25,5 @@ router.get('/authenticated', function(req, res, next) {
 });
 
 router.get('/authfail', function(req, res, next) {
-    res.render('authfail');
+    res.render('error-auth');
 });
