@@ -3,7 +3,7 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
-        clean: ["build", "static/lib","static/assets","typings","bower_components"],
+        clean: ["build", "static/lib","typings","bower_components"],
          watch: {
             files: ['src/**/*.ts','assets/**/*.less'],
             tasks: ['w']

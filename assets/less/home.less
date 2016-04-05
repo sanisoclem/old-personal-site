@@ -1,19 +1,36 @@
 .home-bg
 {
-    position:absolute;
-    top:-65%;
-    left:-50%;
-    width:200%;
-    height:100%;
-    transform: rotate(-5deg);
-    z-index: 1;
-    background-color:@color-bg-gray;
-    box-shadow: 0 0px 10px 3px @color-shadow-gray;
+    position: absolute;
+    top:0px;
+    left:0;
+    right:0;
+    bottom: 0;
+    overflow: hidden;
+    > div
+    {
+        position: absolute;
+        top:250px;
+        left:0;
+        right:0;
+        height:100%;
+        
+        > div 
+        {
+            position:absolute;
+            top:-100%;
+            left:-50%;
+            width:200%;
+            height:100%;
+            transform: rotate(-3deg);
+            z-index: 1;
+            background-color:@color-bg-gray;
+            box-shadow: 0 0px 10px 3px @color-shadow-gray;
+        }    
+    }
 }
 
 .home-header {
-    height:30%;
-    max-height:300px;
+    height:250px;
     //background-color:@color-bg-gray;
     //box-shadow: 0 0px 10px 3px @color-shadow-gray;
     position:relative;
@@ -56,11 +73,13 @@
         background-color:#ccc;
         border-radius:50%;
         margin: auto auto;
+        background: url(../img/portrait-placeholder.png) no-repeat center center;
+        background-size: contain;
     }
     
     .title
     {
-        font-size:24pt;
+        //font-size:4em;
         color: lighten(@color-text-gray,50%);
         margin:0;
         padding:0;
@@ -84,7 +103,7 @@
     
     .sub-title
     {
-        font-size:12pt;
+        //font-size:2em;
         color: lighten(@color-text-gray,30%);
         margin:0;
         padding:0;  

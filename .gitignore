@@ -4,7 +4,6 @@
 node_modules
 bower_components
 typings
-static/assets
 static/lib
 .baseDir.ts
 build
